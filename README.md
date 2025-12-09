@@ -4,12 +4,12 @@ A modern iOS expense tracking application built with SwiftUI following the MVVM 
 
 ## Features
 
-- ✅ **Add/Edit/Delete Expenses** - Full CRUD operations for expense management
-- 🏷️ **Categories & Tags** - Organize expenses with predefined categories and custom tags
-- 💰 **Budget Tracking** - Set monthly budgets and monitor spending limits
-- 📊 **Charts & Analytics** - Visual reports and spending insights
-- 🔍 **Filters** - Filter expenses by category and date
-- 📱 **Native iOS Design** - SwiftUI-based interface with modern design patterns
+- **Add/Edit/Delete Expenses** - Full CRUD operations for expense management
+- **Categories & Tags** - Organize expenses with predefined categories and custom tags
+- **Budget Tracking** - Set monthly budgets and monitor spending limits
+- **Charts & Analytics** - Visual reports and spending insights
+- **Filters** - Filter expenses by category and date
+- **Native iOS Design** - SwiftUI-based interface with modern design patterns
 
 ## Architecture
 
@@ -42,9 +42,9 @@ This project follows the **MVVM (Model-View-ViewModel)** architecture pattern:
 ## Unit Testing
 
 The project includes comprehensive unit tests for:
-- ✅ Models (Codable, Equatable)
-- ✅ ViewModels (business logic, filtering, calculations)
-- ✅ Repository protocols (CRUD operations)
+- Models (Codable, Equatable)
+- ViewModels (business logic, filtering, calculations)
+- Repository protocols (CRUD operations)
 
 ### Test Files
 - `ModelTests.swift` - Tests for data models
@@ -114,14 +114,14 @@ ExpenseTracker/
 ## Categories
 
 The app supports 8 expense categories:
-- 🍴 Food
-- 🚗 Transport
-- 🛒 Shopping
-- 📺 Entertainment
-- 📄 Bills
-- 🏥 Health
-- 📚 Education
-- 💡 Other
+- Food
+- Transport
+- Shopping
+- Entertainment
+- Bills
+- Health
+- Education
+- Other
 
 ## Future Enhancements
 
