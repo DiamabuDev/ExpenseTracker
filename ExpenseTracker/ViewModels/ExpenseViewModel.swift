@@ -5,6 +5,7 @@ class ExpenseViewModel: ObservableObject {
     @Published var expenses: [Expense] = []
     @Published var selectedCategory: Category?
     @Published var selectedDate: Date?
+    @Published var selectedMonth: Date = Date()
     @Published var totalExpenses: Double = 0
     @Published var expensesByCategory: [Category: Double] = [:]
 
@@ -38,6 +39,11 @@ class ExpenseViewModel: ObservableObject {
     func filteredExpenses() -> [Expense] {
         var filtered = expenses
 
+        // Filter by selected month
+        filtered = filtered.filter {
+            Calendar.current.isDate($0.date, equalTo: selectedMonth, toGranularity: .month)
+        }
+
         if let category = selectedCategory {
             filtered = filtered.filter { $0.category == category }
         }
@@ -64,18 +70,43 @@ class ExpenseViewModel: ObservableObject {
     }
 
     private func calculateTotals() {
-        totalExpenses = expenses.reduce(0) { $0 + $1.amount }
+        let monthExpenses = getExpenses(for: selectedMonth)
+        totalExpenses = monthExpenses.reduce(0) { $0 + $1.amount }
 
         expensesByCategory = Category.allCases.reduce(into: [:]) { result, category in
-            result[category] = expenses
+            result[category] = monthExpenses
                 .filter { $0.category == category }
                 .reduce(0) { $0 + $1.amount }
         }
     }
 
     func getMonthlyTotal() -> Double {
-        let now = Date()
-        return getExpenses(for: now).reduce(0) { $0 + $1.amount }
+        return getExpenses(for: selectedMonth).reduce(0) { $0 + $1.amount }
+    }
+
+    func goToPreviousMonth() {
+        if let newMonth = Calendar.current.date(byAdding: .month, value: -1, to: selectedMonth) {
+            selectedMonth = newMonth
+            calculateTotals()
+        }
+    }
+
+    func goToNextMonth() {
+        if let newMonth = Calendar.current.date(byAdding: .month, value: 1, to: selectedMonth) {
+            selectedMonth = newMonth
+            calculateTotals()
+        }
+    }
+
+    func goToCurrentMonth() {
+        selectedMonth = Date()
+        calculateTotals()
+    }
+
+    var selectedMonthString: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM yyyy"
+        return formatter.string(from: selectedMonth)
     }
 
     func clearFilters() {

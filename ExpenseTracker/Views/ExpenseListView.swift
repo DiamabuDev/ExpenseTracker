@@ -8,19 +8,31 @@ struct ExpenseListView: View {
     var body: some View {
         NavigationView {
             List {
-                if expenseViewModel.filteredExpenses().isEmpty {
-                    ContentUnavailableView(
-                        "No Expenses",
-                        systemImage: "tray.fill",
-                        description: Text("Add your first expense to get started")
-                    )
-                } else {
-                    ForEach(expenseViewModel.filteredExpenses()) { expense in
-                        NavigationLink(destination: ExpenseDetailView(expense: expense, expenseViewModel: expenseViewModel)) {
-                            ExpenseRowView(expense: expense)
-                        }
+                Section {
+                    HStack {
+                        Spacer()
+                        MonthPickerView(expenseViewModel: expenseViewModel)
+                        Spacer()
                     }
-                    .onDelete(perform: deleteExpenses)
+                    .listRowInsets(EdgeInsets())
+                    .listRowBackground(Color.clear)
+                }
+
+                Section {
+                    if expenseViewModel.filteredExpenses().isEmpty {
+                        ContentUnavailableView(
+                            "No Expenses",
+                            systemImage: "tray.fill",
+                            description: Text("Add your first expense to get started")
+                        )
+                    } else {
+                        ForEach(expenseViewModel.filteredExpenses()) { expense in
+                            NavigationLink(destination: ExpenseDetailView(expense: expense, expenseViewModel: expenseViewModel)) {
+                                ExpenseRowView(expense: expense)
+                            }
+                        }
+                        .onDelete(perform: deleteExpenses)
+                    }
                 }
             }
             .navigationTitle("Expenses")

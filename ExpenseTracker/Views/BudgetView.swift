@@ -13,19 +13,31 @@ struct BudgetView: View {
     var body: some View {
         NavigationView {
             List {
-                if budgetViewModel.getCurrentMonthBudgets().isEmpty {
-                    ContentUnavailableView(
-                        "No Budgets",
-                        systemImage: "chart.pie",
-                        description: Text("Set a budget to track your spending")
-                    )
-                } else {
-                    ForEach(budgetViewModel.getCurrentMonthBudgets()) { budget in
-                        BudgetRowView(
-                            budget: budget,
-                            spent: expenseViewModel.getTotalExpenses(for: budget.category, in: budget.month),
-                            budgetViewModel: budgetViewModel
+                Section {
+                    HStack {
+                        Spacer()
+                        MonthPickerView(expenseViewModel: expenseViewModel)
+                        Spacer()
+                    }
+                    .listRowInsets(EdgeInsets())
+                    .listRowBackground(Color.clear)
+                }
+
+                Section {
+                    if budgetViewModel.getSelectedMonthBudgets(for: expenseViewModel.selectedMonth).isEmpty {
+                        ContentUnavailableView(
+                            "No Budgets",
+                            systemImage: "chart.pie",
+                            description: Text("Set a budget to track your spending")
                         )
+                    } else {
+                        ForEach(budgetViewModel.getSelectedMonthBudgets(for: expenseViewModel.selectedMonth)) { budget in
+                            BudgetRowView(
+                                budget: budget,
+                                spent: expenseViewModel.getTotalExpenses(for: budget.category, in: expenseViewModel.selectedMonth),
+                                budgetViewModel: budgetViewModel
+                            )
+                        }
                     }
                 }
             }

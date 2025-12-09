@@ -8,19 +8,19 @@ struct HomeView: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 20) {
+                    // Month Picker
+                    MonthPickerView(expenseViewModel: expenseViewModel)
+                        .padding(.horizontal)
+
                     // Monthly Summary Card
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("This Month")
+                        Text("Total Spending")
                             .font(.headline)
                             .foregroundColor(.white.opacity(0.9))
 
                         Text("$\(expenseViewModel.getMonthlyTotal(), specifier: "%.2f")")
                             .font(.system(size: 42, weight: .bold))
                             .foregroundColor(.white)
-
-                        Text("Total Spending")
-                            .font(.subheadline)
-                            .foregroundColor(.white.opacity(0.9))
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()

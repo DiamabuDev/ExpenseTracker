@@ -67,4 +67,10 @@ class BudgetViewModel: ObservableObject {
             Calendar.current.isDate($0.month, equalTo: now, toGranularity: .month)
         }
     }
+
+    func getSelectedMonthBudgets(for month: Date) -> [Budget] {
+        return budgets.filter {
+            Calendar.current.isDate($0.month, equalTo: month, toGranularity: .month)
+        }
+    }
 }

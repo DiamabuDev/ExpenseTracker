@@ -8,6 +8,10 @@ struct AnalyticsView: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 24) {
+                    // Month Picker
+                    MonthPickerView(expenseViewModel: expenseViewModel)
+                        .padding(.horizontal)
+
                     // Total Overview
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Total Spending")
@@ -69,12 +73,12 @@ struct AnalyticsView: View {
                         .cornerRadius(12)
                     }
 
-                    // Monthly Trend
+                    // Transaction Count
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("This Month")
+                        Text("Total Transactions")
                             .font(.headline)
 
-                        Text("$\(expenseViewModel.getMonthlyTotal(), specifier: "%.2f")")
+                        Text("\(expenseViewModel.getExpenses(for: expenseViewModel.selectedMonth).count)")
                             .font(.title)
                             .fontWeight(.bold)
                     }
